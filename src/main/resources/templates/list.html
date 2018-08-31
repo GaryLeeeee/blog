@@ -17,6 +17,10 @@
 <![endif]-->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="http://how2j.cn/study/axios.min.js"></script>
+    <!--加载不显示大括号{{}}-->
+    <style type="text/css">
+        [v-cloak] { display: none }
+    </style>
 </head>
 <body>
 <header class="header-navigation" id="header">
@@ -30,6 +34,7 @@
       <li><a href="/gbook">留言</a></li>
       <li><a href="/info">内容页</a></li>
       <li><a href="/infopic">内容页</a></li>
+      <li><a href="/edit">发表日记</a></li>
     </ul>
 </nav>
 </header>
@@ -92,12 +97,13 @@
       </ul>
     </div>
   </aside>
-  <main class="r_box" id="demo">
+  <main class="r_box" id="demo" v-cloak>
     <li v-for="blog in blogs"><i><a :href="'info?id='+blog.id"><img src="images/1.jpg"></a></i>
       <h3><a :href="['info?id='+blog.id]">{{blog.title}}</a></h3>
       <p>{{blog.content}}</p>
     </li>
-    <div class="pagelist"><a class="allpage"><b>99</b></a>&nbsp;&nbsp;<a href="#" class="curPage">1</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">2</a>&nbsp;&nbsp;<a href="#" onclick="page(3)">3</a>&nbsp;&nbsp;<a href="#" onclick="page(4)">4</a>&nbsp;&nbsp;<a href="#" onclick="page(5)">5</a>&nbsp;&nbsp;<a href="#" onclick="page(6)">6</a>&nbsp;&nbsp;<a href="#" onclick="page(7)">7</a>&nbsp;&nbsp;<a href="#" onclick="page(8)">8</a>&nbsp;&nbsp;<a href="#" onclick="page(9)">9</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">下一页</a></div>
+    <!--<div class="pagelist"><a class="allpage"><b>99</b></a>&nbsp;&nbsp;<a href="#" class="curPage">1</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">2</a>&nbsp;&nbsp;<a href="#" onclick="page(3)">3</a>&nbsp;&nbsp;<a href="#" onclick="page(4)">4</a>&nbsp;&nbsp;<a href="#" onclick="page(5)">5</a>&nbsp;&nbsp;<a href="#" onclick="page(6)">6</a>&nbsp;&nbsp;<a href="#" onclick="page(7)">7</a>&nbsp;&nbsp;<a href="#" onclick="page(8)">8</a>&nbsp;&nbsp;<a href="#" onclick="page(9)">9</a>&nbsp;&nbsp;<a href="#" onclick="page(2)">下一页</a></div>-->
+    <div class="pagelist"><a href="javascript:" @click="goTo" v-for="page in pageInfo.pages">{{page}}</a></div>
   </main>
 </article>
 <footer>
@@ -109,22 +115,36 @@
     new Vue({
         el:"#demo",
         data:{
+            pageInfo:[],
             blogs:[]
         },
         created:function () {
             var self = this;
             $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
             $.get(
-                "listBlog",
+                "getBlogPageInfo",
+                {start: GetQueryString("start"?"start":0)},
                 function (data) {
-                    self.blogs = data;
+                    self.pageInfo = data;
+                    self.blogs = data["list"];
                 }
             )
-//            $('#content').html(this.blog.content);//使用这个可以将文本以html输出
+//            $('#content').html(this.Blog.content);//使用这个可以将文本以html输出
         },
         methods:{
-
+            goTo:function (event) {//页数跳转
+//                获取当前标签的文本值
+                var text = event.target.innerHTML;
+                console.log("点击事件(页数为):"+text);
+                window.location.href="list?start="+text;
+            }
         }
     });
+    function GetQueryString(name) {//获取url中key为name的value
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
 </script>
 </html>

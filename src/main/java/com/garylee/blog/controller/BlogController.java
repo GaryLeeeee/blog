@@ -2,9 +2,12 @@ package com.garylee.blog.controller;
 
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.service.BlogService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Date;
@@ -17,6 +20,13 @@ import java.util.List;
 public class BlogController {
     @Autowired
     BlogService blogService;
+    @RequestMapping("getBlogPageInfo")
+    @ResponseBody
+    public PageInfo list(@RequestParam(value = "start",defaultValue = "0")int start, @RequestParam(value = "size",defaultValue = "10")int size){
+        PageHelper.startPage(start,size);
+        PageInfo<Blog> page = new PageInfo<>(blogService.list());
+        return page;
+    }
     @RequestMapping("listBlog")
     @ResponseBody
     public List<Blog> list(){
@@ -24,9 +34,11 @@ public class BlogController {
     }
     @RequestMapping("addBlog")
     public String add(Blog blog){
-        blog.setCreatetime(new Date().toString());
+        blog.setCreatetime(new Date());
+        blog.setIstop(0);
+        blog.setReadnum(0);
         blogService.add(blog);
-        return "info";
+        return "list";
     }
     @RequestMapping("getBlog")
     @ResponseBody

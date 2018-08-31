@@ -1,5 +1,7 @@
 package com.garylee.blog.domain;
 
+import java.util.Date;
+
 public class Blog {
     private Integer id;
 
@@ -7,7 +9,7 @@ public class Blog {
 
     private Integer readnum;
 
-    private String createtime;
+    private Date createtime;
 
     private Integer istop;
 
@@ -37,12 +39,12 @@ public class Blog {
         this.readnum = readnum;
     }
 
-    public String getCreatetime() {
+    public Date getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime == null ? null : createtime.trim();
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public Integer getIstop() {

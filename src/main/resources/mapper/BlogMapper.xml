@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="readNum" jdbcType="INTEGER" property="readnum" />
-    <result column="createTime" jdbcType="VARCHAR" property="createtime" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="isTop" jdbcType="INTEGER" property="istop" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.garylee.blog.domain.Blog">
@@ -126,7 +126,7 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.garylee.blog.domain.Blog" useGeneratedKeys="true">
     insert into blog (title, readNum, createTime, 
       isTop, content)
-    values (#{title,jdbcType=VARCHAR}, #{readnum,jdbcType=INTEGER}, #{createtime,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{readnum,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
       #{istop,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.garylee.blog.domain.Blog" useGeneratedKeys="true">
@@ -156,7 +156,7 @@
         #{readnum,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
-        #{createtime,jdbcType=VARCHAR},
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="istop != null">
         #{istop,jdbcType=INTEGER},
@@ -185,7 +185,7 @@
         readNum = #{record.readnum,jdbcType=INTEGER},
       </if>
       <if test="record.createtime != null">
-        createTime = #{record.createtime,jdbcType=VARCHAR},
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.istop != null">
         isTop = #{record.istop,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       readNum = #{record.readnum,jdbcType=INTEGER},
-      createTime = #{record.createtime,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
       isTop = #{record.istop,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
@@ -215,7 +215,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       title = #{record.title,jdbcType=VARCHAR},
       readNum = #{record.readnum,jdbcType=INTEGER},
-      createTime = #{record.createtime,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
       isTop = #{record.istop,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -231,7 +231,7 @@
         readNum = #{readnum,jdbcType=INTEGER},
       </if>
       <if test="createtime != null">
-        createTime = #{createtime,jdbcType=VARCHAR},
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="istop != null">
         isTop = #{istop,jdbcType=INTEGER},
@@ -246,7 +246,7 @@
     update blog
     set title = #{title,jdbcType=VARCHAR},
       readNum = #{readnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       isTop = #{istop,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -255,7 +255,7 @@
     update blog
     set title = #{title,jdbcType=VARCHAR},
       readNum = #{readnum,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       isTop = #{istop,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
