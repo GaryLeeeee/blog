@@ -5,6 +5,7 @@ import com.garylee.blog.service.BlogService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +30,7 @@ public class BlogController {
     }
     @RequestMapping("listBlog")
     @ResponseBody
+//    @Cacheable(value = "abc",key = "name")
     public List<Blog> list(){
         return blogService.list();
     }
@@ -44,6 +46,15 @@ public class BlogController {
     @ResponseBody
     public Blog get(int id){
         return blogService.get(id);
+    }
+
+    @RequestMapping("updateBlog")
+    public void update(int id){
+        Blog blog = blogService.get(id);
+        System.out.println(blog.getReadnum());
+        blog.setReadnum(blog.getReadnum()+1);//访问量
+        System.out.println(blog.getReadnum());
+        blogService.update(blog);
     }
 
     public static void main(String[] args) {

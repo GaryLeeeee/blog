@@ -3,6 +3,7 @@ package com.garylee.blog.service.impl;
 import com.garylee.blog.dao.BlogMapper;
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.domain.BlogExample;
+import com.garylee.blog.service.BlogLikeService;
 import com.garylee.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ import java.util.List;
 public class BlogServiceImpl implements BlogService{
     @Autowired
     BlogMapper blogMapper;
-
+    @Autowired
+    BlogLikeService blogLikeService;
     @Override
     public void add(Blog blog) {
         blogMapper.insert(blog);
@@ -34,13 +36,18 @@ public class BlogServiceImpl implements BlogService{
 
     @Override
     public Blog get(int id) {
-        return blogMapper.selectByPrimaryKey(id);
+        Blog blog = blogMapper.selectByPrimaryKey(id);
+        blog.setLikeNum(blogLikeService.likeNum(blog.getId()));//设置点赞数量
+        return blog;
     }
 
     @Override
     public List<Blog> list() {
         BlogExample blogExample = new BlogExample();
         blogExample.setOrderByClause("id desc");
-        return blogMapper.selectByExample(blogExample);
+        List<Blog> blogs = blogMapper.selectByExample(blogExample);
+        for(Blog blog:blogs)
+            blog.setLikeNum(blogLikeService.likeNum(blog.getId()));
+        return blogs;
     }
 }

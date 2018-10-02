@@ -117,7 +117,7 @@
                 <div class="news_con">{{blog.content}}</div>
                 <div class="share">
                     <!--<p class="diggit"><a href="JavaScript:makeRequest('/e/public/digg/?classid=3&amp;id=19&amp;dotop=1&amp;doajax=1&amp;ajaxarea=diggnum','EchoReturnedText','GET','');"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>-->
-                    <p class="diggit"><a href="JavaScript:makeRequest('/e/public/digg/?classid=3&amp;id=19&amp;dotop=1&amp;doajax=1&amp;ajaxarea=diggnum','EchoReturnedText','GET','');"> 很赞哦！ </a>(<b id="diggnum">13</b>)</p>
+                    <p class="diggit"><a href="javascript:" @click="like"> 很赞哦！ </a>(<b id="diggnum">{{blog.likeNum}}</b>)</p>
                 </div>
                 <div class="nextinfo">
                     <p v-if="hasPrevious()">上一篇：<a :href="'info?id='+(blog.id-1)">{{blogs[blogs.length-1-blog.id+2].title}}</a></p>
@@ -225,6 +225,7 @@
         created:function () {
             var self = this;
             $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
+            $.get("updateBlog?id="+GetQueryString("id"));
             $.get(
                 "getBlog?id="+GetQueryString("id"),
                 function (data) {
@@ -248,6 +249,18 @@
             hasNext: function () {
                 var next = Number(GetQueryString("id"))+1;
                 return this.blogs[this.blogs.length-next] !== undefined;
+            },
+            like:function () {
+                var self = this;
+                $.get(
+                    "blogLike",
+                    {blogid:GetQueryString("id")},
+                    function (data) {
+                        confirm(data);//点赞结果返回
+                        if(data==='点赞成功')
+                            self.blog.likeNum++;
+                    }
+                );
             }
         }
     });

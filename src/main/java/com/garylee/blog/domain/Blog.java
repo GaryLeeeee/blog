@@ -15,6 +15,17 @@ public class Blog {
 
     private String content;
 
+    //非数据库字段
+    private int likeNum;
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
+    }
+
     public Integer getId() {
         return id;
     }
