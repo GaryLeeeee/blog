@@ -51,9 +51,7 @@ public class BlogController {
     @RequestMapping("updateBlog")
     public void update(int id){
         Blog blog = blogService.get(id);
-        System.out.println(blog.getReadnum());
         blog.setReadnum(blog.getReadnum()+1);//访问量
-        System.out.println(blog.getReadnum());
         blogService.update(blog);
     }
 
