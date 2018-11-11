@@ -1,5 +1,6 @@
 package com.garylee.blog.controller;
 
+import com.garylee.blog.dao.BlogDao;
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.service.BlogService;
 import com.github.pagehelper.PageHelper;
@@ -21,6 +22,8 @@ import java.util.List;
 public class BlogController {
     @Autowired
     BlogService blogService;
+    @Autowired
+    BlogDao blogDao;
     @RequestMapping("getBlogPageInfo")
     @ResponseBody
     public PageInfo list(@RequestParam(value = "start",defaultValue = "0")int start, @RequestParam(value = "size",defaultValue = "10")int size){
@@ -33,6 +36,11 @@ public class BlogController {
 //    @Cacheable(value = "abc",key = "name")
     public List<Blog> list(){
         return blogService.list();
+    }
+    @RequestMapping("sortBlogs")
+    @ResponseBody
+    public List<Blog> sortByReadNum(){
+        return blogDao.sortByReadNum();
     }
     @RequestMapping("addBlog")
     public String add(Blog blog){
