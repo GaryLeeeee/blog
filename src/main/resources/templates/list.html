@@ -41,12 +41,14 @@
 <article  id="demo">
   <aside class="l_box">
  <div class="search">
-      <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+      <!--<form action="javascript:" method="post" name="searchform" id="searchform">-->
+      <form @submit.prevent="search">
         <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
         <input name="show" value="title" type="hidden">
         <input name="tempid" value="1" type="hidden">
         <input name="tbname" value="news" type="hidden">
         <input name="Submit" class="input_submit" value="搜索" type="submit">
+          <!--<a name="Submit" class="input_submit" href="javascript:" type="submit" @click="search">搜索</a>-->
       </form>
     </div>
     <div class="fenlei">
@@ -101,7 +103,7 @@
     </div>
   </aside>
   <main class="r_box" v-cloak>
-    <li v-for="blog in blogs"><i><a :href="'info?id='+blog.id"><img src="images/1.jpg"></a></i>
+    <li v-for="blog in blogs" class="pp"><i><a :href="'info?id='+blog.id"><img src="images/1.jpg"></a></i>
       <h3><a :href="['info?id='+blog.id]">{{blog.title}}</a></h3>
       <p>{{blog.content}}</p>
     </li>
@@ -147,6 +149,25 @@
                 var text = event.target.innerHTML;
                 console.log("点击事件(页数为):"+text);
                 window.location.href="list?start="+text;
+            },
+            search:function () {
+                var self = this;
+//                console.log("搜索");
+//                console.log($('#keyboard').val());
+                /*
+                缺：查询到的结果分页，关键词高亮
+                 */
+                $.get(
+                    "searchBlog",
+                    {keyword:$('#keyboard').val(),start: GetQueryString("start"?"start":0)},
+                    function (data) {
+//                        self.blogs = data;
+                        self.pageInfo = data;
+                        self.blogs = data["list"];
+//                      在搜索列表第一个上面加上提示信息(搜索结果),不直接在父级容器加(对不齐)
+                        $(".pp:first").before("<font>搜索结果("+$('#keyboard').val()+"):</font>")
+                    }
+                )
             }
         }
     });

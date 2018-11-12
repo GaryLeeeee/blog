@@ -28,7 +28,8 @@ public class BlogController {
     @ResponseBody
     public PageInfo list(@RequestParam(value = "start",defaultValue = "0")int start, @RequestParam(value = "size",defaultValue = "10")int size){
         PageHelper.startPage(start,size);
-        PageInfo<Blog> page = new PageInfo<>(blogService.list());
+        PageInfo<Blog> page = new PageInfo<>(blogDao.listBlogs());
+//        PageInfo<Blog> page = new PageInfo<>(blogService.list());
         return page;
     }
     @RequestMapping("listBlog")
@@ -61,6 +62,18 @@ public class BlogController {
         Blog blog = blogService.get(id);
         blog.setReadnum(blog.getReadnum()+1);//访问量
         blogService.update(blog);
+    }
+    @RequestMapping("searchBlog")
+    @ResponseBody
+//    public List<Blog> search(String keyword){
+//        return blogDao.selectByKeyWord("%"+keyword+"%");
+//    }
+    public PageInfo list(@RequestParam("keyword")String keyword,@RequestParam(value = "start",defaultValue = "0")int start, @RequestParam(value = "size",defaultValue = "10")int size){
+        System.out.println(1);
+        PageHelper.startPage(start,size);
+        PageInfo<Blog> page = new PageInfo<>(blogDao.selectByKeyWord("%"+keyword+"%"));
+//        PageInfo<Blog> page = new PageInfo<>(blogService.list());
+        return page;
     }
 
     public static void main(String[] args) {
