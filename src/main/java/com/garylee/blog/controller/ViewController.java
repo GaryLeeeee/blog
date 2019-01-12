@@ -44,4 +44,8 @@ public class ViewController {
     public String editDemo(){
         return "bianjiqi";
     }
+    @RequestMapping("upload")
+    public String uploadPhoto(){
+        return "upload";
+    }
 }
