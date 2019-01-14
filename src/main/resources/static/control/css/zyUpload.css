@@ -127,7 +127,8 @@ pre{font-family:'simsun';}
 .webuploader_pick:hover{
 	border: 1px solid #BBB;
 }
-.upload_btn{
+/*设置自己加的"完成"按钮，记得加逗号啊！！*/
+.upload_btn,.finished{
     background: none repeat scroll 0 0 #00B7EE;
     border-radius: 3px;
     color: #fff;

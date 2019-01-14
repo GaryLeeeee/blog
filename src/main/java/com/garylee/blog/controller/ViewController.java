@@ -48,4 +48,8 @@ public class ViewController {
     public String uploadPhoto(){
         return "upload";
     }
+    @RequestMapping("albumEdit")
+    public String albumEdit(){
+        return "albumEdit";
+    }
 }

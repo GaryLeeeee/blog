@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-model="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <title>首页_GaryLee个人博客</title>
@@ -8,6 +8,8 @@
 <link href="css/index.css" rel="stylesheet">
 <link href="css/infopic.css" rel="stylesheet">
 <link href="css/m.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://how2j.cn/study/axios.min.js"></script>
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/piccontent.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/hc-sticky.js"></script>
@@ -15,6 +17,10 @@
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
 <![endif]-->
+  <!--加载不显示大括号{{}}-->
+  <style type="text/css">
+    [v-cloak] { display: none }
+  </style>
 </head>
 <body>
 <header class="header-navigation" id="header">
@@ -31,7 +37,7 @@
     </ul>
 </nav>
 </header>
-<article>
+<article id="demo" v-cloak>
   <aside class="l_box">
     <div class="about_me">
       <h2>关于我</h2>
@@ -103,9 +109,9 @@
     <!--弹出层结束--> 
     <!--图片特效内容开始-->
     <div class="piccontext">
-      <h2> 上戏校花迪丽热巴清新写真宛若小仙女 </h2>
+      <h2> {{album.title}} </h2>
       <div class="source">
-        <div class="source_left"><span>2018-5-7</span> </div>
+        <div class="source_left"><span>{{album.createtime | dataFormat('yyyy-MM-dd')}}</span> </div>
         <div class="source_right"> <a href="javascript:;" class="list">列表查看</a> </div>
         <div class="source_right1"> <a href="javascript:;" class="gaoqing">高清查看</a> </div>
       </div>
@@ -113,7 +119,7 @@
       <div class="picshow">
         <div class="picshowtop"> <a href="#"><img src="" alt="" id="pic1" curindex="0" /></a> <a id="preArrow" href="javascript:void(0)" class="contextDiv" title="上一张"><span id="preArrow_A"></span></a> <a id="nextArrow" href="javascript:void(0)" class="contextDiv" title="下一张"><span id="nextArrow_A"></span></a> </div>
         <div class="picshowtxt">
-          <div class="picshowtxt_left"><span>1</span>/<i>12</i></div>
+          <div class="picshowtxt_left"><span>1</span>/<i>{{pictures.length}}</i></div>
           <div class="picshowtxt_right"></div>
         </div>
         <div class="picshowlist">
@@ -121,18 +127,8 @@
             <div class="picmidleft"> <a href="javascript:void(0)" id="preArrow_B"><span class="sleft"></span></a> </div>
             <div class="picmidmid">
               <ul>
-                <li> <a href="javascript:void(0);"><img src="images/1.jpg" alt="" bigimg="images/1.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/2.jpg" alt="" bigimg="images/2.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/3.jpg" alt="" bigimg="images/3.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/4.jpg" alt="" bigimg="images/4.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/5.jpg" alt="" bigimg="images/5.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/6.jpg" alt="" bigimg="images/6.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/7.jpg" alt="" bigimg="images/7.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/8.jpg" alt="" bigimg="images/8.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/9.jpg" alt="" bigimg="images/9.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/10.jpg" alt="" bigimg="images/10.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/11.jpg" alt="" bigimg="images/11.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
-                <li> <a href="javascript:void(0);"><img src="images/12.jpg" alt="" bigimg="images/12.jpg" text="《古剑》小师妹迪丽热巴清新写真宛若小仙女" /></a></li>
+                <!--bigimg设置大图显示-->
+                <li v-for="picture in pictures"> <a href="javascript:void(0);"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'" alt="" :bigimg="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'" :text="[album.title]" /></a></li>
               </ul>
             </div>
             <div class="picmidright"> <a href="javascript:void(0)" id="nextArrow_B"><span class="sright"></span></a> </div>
@@ -143,76 +139,10 @@
       <!--列表展示-->
       <div class="piclistshow">
         <ul>
-          <li>
-            <div class="picimg"><img src="images/1.jpg" alt="" /></div>
+          <li v-for="(picture,index) in pictures">
+            <div class="picimg"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'" alt="" /></div>
             <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(1/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/2.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(2/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/3.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(3/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/4.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(4/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/5.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(5/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/6.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(6/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/7.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(7/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/8.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(8/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/9.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(9/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/10.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(10/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/11.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(11/12)</span></h3>
-            </div>
-          </li>
-          <li>
-            <div class="picimg"><img src="images/12.jpg" alt="" /></div>
-            <div class="pictxt">
-              <h3>《古剑》小师妹迪丽热巴清新写真宛若小仙女<span>(12/12)</span></h3>
+              <h3>{{album.title}}<span>({{index}}/{{pictures.length}})</span></h3>
             </div>
           </li>
         </ul>
@@ -220,15 +150,17 @@
     </div>
     <div class="pictext">
       <ul>
-        游览普陀山一天时间足够了，如果考虑到还要来还愿，那就没必要一次把所有的地方都去到，如果只是单纯的旅游，那就把最重要的地方看看就可以了，普陀山并不是以景色著称的。普陀山上住宿餐饮价格都非常贵，住宿还好说，毕竟供不应求嘛，尤其是节假日，想要提前预定都不一定有房间，餐饮更是离谱，一般都是岛外四五倍的价格。所以建议大家像我们一样住在朱家尖，莲花路是朱家尖镇的中心，比较繁华热闹，住宿餐饮都集中在那里，岛上游玩去庙里体验素斋就可以啦。
+        {{album.content}}
       </ul>
     </div>
     <div class="share">
-      <p class="diggit"><a href="JavaScript:makeRequest('/e/public/digg/?classid=3&amp;id=19&amp;dotop=1&amp;doajax=1&amp;ajaxarea=diggnum','EchoReturnedText','GET','');"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>
+      <p class="diggit"><a href="javascript:" @click="like"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>
     </div>
  <div class="nextinfo">
-      <p>上一篇：<a href="/news/life/2018-03-13/804.html">作为一个设计师,如果遭到质疑你是否能恪守自己的原则?</a></p>
-      <p>下一篇：<a href="/news/life/">返回列表</a></p>
+   <p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+(album.id-1)">{{albums[albums.length-1-album.id+2].title}}</a></p>
+   <p v-else>上一篇：<a href="/share">返回列表</a></p>
+   <p  v-if="hasNext()">下一篇：<a :href="'infopic?id='+(album.id+1)">{{albums[albums.length-1-album.id].title}}</a></p>
+   <p v-else>下一篇：<a href="/share">返回列表</a></p>
     </div>
     <div class="news_pl">
         <h2>文章评论</h2>
@@ -288,4 +220,86 @@
 </article>
 <a href="#" class="cd-top">Top</a>
 </body>
+<script>
+    //    过滤器(将date格式化输出)
+    Vue.filter('dataFormat', function (value, fmt) {
+        let getDate = new Date(value);
+        let o = {
+            'M+': getDate.getMonth() + 1,
+            'd+': getDate.getDate(),
+            'h+': getDate.getHours(),
+            'm+': getDate.getMinutes(),
+            's+': getDate.getSeconds(),
+            'q+': Math.floor((getDate.getMonth() + 3) / 3),
+            'S': getDate.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+        }
+        for (let k in o) {
+            if (new RegExp('(' + k + ')').test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+            }
+        }
+        return fmt;
+    });
+    new Vue({
+        el:"#demo",
+        data:{
+            album:[],
+            albums:[],
+            pictures:[],
+//            pageInfo:[],
+//            sortedBlogs:[]
+        },
+        created:function () {
+            var self = this;
+            $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
+//            $.get("updateBlog?id="+GetQueryString("id"));
+            $.get(
+                "getAlbum?id="+GetQueryString("id"),
+                function (data) {
+                    self.album = data;
+                }
+            );
+            $.get(
+                "listAlbum",
+                function (data) {
+                    self.albums = data;
+                }
+            );
+            $.get(
+                "listPictures",
+                {aid:GetQueryString("id")},
+                function (data) {
+                    self.pictures = data;
+                }
+            );
+//            console.log("是否有上一页:"+(this.blogs[Number(GetQueryString("id"))-1-1] !== undefined))
+//            console.log("是否有下一页:"+(this.blogs[Number(GetQueryString("id"))] !== undefined))
+        },
+        methods: {
+            hasPrevious: function () {
+                var previous = Number(GetQueryString("id"))-1;
+                return this.albums[this.albums.length-previous] !== undefined;//加上!
+            },
+            hasNext: function () {
+                var next = Number(GetQueryString("id"))+1;
+                return this.albums[this.albums.length-next] !== undefined;
+            },
+            like:function () {
+                var self = this;
+                $.get(
+                    confirm("相册页未实现!")
+                );
+            }
+        }
+    });
+    function GetQueryString(name) {//获取url中key为name的value
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>
 </html>

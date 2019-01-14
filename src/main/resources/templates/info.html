@@ -95,7 +95,7 @@
                 <h3 class="news_title">{{blog.title}}</h3>
                 <div class="bloginfo">
                     <ul>
-                        <li class="author">作者：<a href="/">杨青</a></li>
+                        <li class="author">作者：<a href="/">GaryLee</a></li>
                         <li class="lmname"><a href="/">学无止境</a></li>
                         <!--<li class="timer">时间：2018-5-13</li>-->
                         <li class="timer">时间：{{blog.createtime | dataFormat('yyyy-MM-dd hh:mm:ss')}}</li>
@@ -214,6 +214,7 @@
         created:function () {
             var self = this;
             $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
+            //访问量
             $.get("updateBlog?id="+GetQueryString("id"));
             $.get(
                 "getBlog?id="+GetQueryString("id"),
