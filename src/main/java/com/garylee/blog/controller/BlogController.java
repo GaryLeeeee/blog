@@ -75,6 +75,11 @@ public class BlogController {
 //        PageInfo<Blog> page = new PageInfo<>(blogService.list());
         return page;
     }
+    @RequestMapping("deleteBlog")
+    public String deleteBlog(int id){
+        blogService.delete(id);
+        return "redirect:/list";
+    }
 
     public static void main(String[] args) {
         System.out.println(new Date().toString());

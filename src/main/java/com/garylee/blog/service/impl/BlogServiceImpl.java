@@ -3,10 +3,12 @@ package com.garylee.blog.service.impl;
 import com.garylee.blog.dao.BlogMapper;
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.domain.BlogExample;
+import com.garylee.blog.domain.BlogLike;
 import com.garylee.blog.service.BlogLikeService;
 import com.garylee.blog.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,8 +26,15 @@ public class BlogServiceImpl implements BlogService{
         blogMapper.insert(blog);
     }
 
+    @Transactional
     @Override
+    // TODO: 2019/2/22 0022 删除blog同时删除blogLike(有关联外键),后续可用级联删除 
     public void delete(int id) {
+        List<BlogLike> blogLikes = blogLikeService.list(id);
+        for(BlogLike blogLike:blogLikes){
+            blogLikeService.delete(blogLike.getId());
+        }
+        
         blogMapper.deleteByPrimaryKey(id);
     }
 

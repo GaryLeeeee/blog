@@ -65,4 +65,11 @@ public class BlogLikeServiceImpl implements BlogLikeService{
         example.createCriteria().andBlogidEqualTo(blodId);
         return blogLikeMapper.selectByExample(example).size();
     }
+
+    @Override
+    public List<BlogLike> list(int blogId) {
+        BlogLikeExample example = new BlogLikeExample();
+        example.createCriteria().andBlogidEqualTo(blogId);
+        return blogLikeMapper.selectByExample(example);
+    }
 }

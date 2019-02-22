@@ -54,7 +54,9 @@ a.curPage { color: #19585d; font-weight: bold; }
 .picbox ul li a:hover { color: #19585d }
 .tags a { background: #F4650E; padding: 3px 8px; margin: 0 5px 0 0; color: #fff; }
 .tags { margin: 10px 0; }
-.infosbox img { max-width: 100%; height: auto; width: 100% }
+/*.infosbox img { max-width: 100%; height: auto; width: 100% }*/
+ /*ps. 设置为图片原尺寸(否则覆盖blog正文div)*/
+.infosbox img { max-width: 100%}
 .share { padding: 20px; }
 .nextinfo { line-height: 24px; width: 100%; overflow: hidden; margin: 20px 0 }/*��һƪ��һƪ*/
 .nextinfo p { padding: 4px 10px; border-radius: 5px; }
@@ -89,6 +91,8 @@ p.fbinfo { margin: 10px 0; }
 .hf { margin: 0 20px; padding-bottom: 20px; border-bottom: #dedddd 1px dashed; }
 textarea#lytext { width: 100%; }
 .gbox input[type="submit"] { display: block; background: #040404; color: #fff; border: 0; line-height: 30px; padding: 0 20px; border-radius: 5px; float: right; }
+/*ps. 将button也设置css*/
+.gbox input[type="button"] { display: block; background: #040404; color: #fff; border: 0; line-height: 30px; padding: 0 20px; border-radius: 5px; float: right; }
 .ecomment { border: #dedcdc 1px solid; padding: 10px; margin-bottom: 10px; }
 span.ecommentauthor { color: #b5b5b5; font-size: 14px; margin-bottom: 5px; display: block; }
 .saying { line-height: 30px; color: #a9a6a6; }

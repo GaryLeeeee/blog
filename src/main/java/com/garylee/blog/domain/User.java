@@ -3,15 +3,19 @@ package com.garylee.blog.domain;
 public class User {
     private Integer id;
 
-    private String username;
+    private String name;
 
     private String password;
 
-    private String sex;
+    private String salt;
 
-    private String email;
+    public String getSalt() {
+        return salt;
+    }
 
-    private String createtime;
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
     public Integer getId() {
         return id;
@@ -21,12 +25,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getPassword() {
@@ -35,29 +39,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
-
-    public String getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime == null ? null : createtime.trim();
     }
 }

@@ -1,5 +1,6 @@
 package com.garylee.blog.service.impl;
 
+import com.garylee.blog.dao.UserDao;
 import com.garylee.blog.dao.UserMapper;
 import com.garylee.blog.domain.User;
 import com.garylee.blog.domain.UserExample;
@@ -16,6 +17,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    UserDao userDao;
 
     @Override
     public void add(User user) {
@@ -42,5 +45,10 @@ public class UserServiceImpl implements UserService{
         UserExample userExample = new UserExample();
         userExample.setOrderByClause("id desc");
         return userMapper.selectByExample(userExample);
+    }
+    @Override
+    public boolean isExist(String name) {
+        User user = userDao.findByName(name);
+        return null!=user;
     }
 }
