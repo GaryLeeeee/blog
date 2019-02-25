@@ -28,4 +28,16 @@ public class PictureServiceImpl implements PictureService{
         List<Picture> pictures = pictureMapper.selectByExample(example);
         return pictures;
     }
+
+    @Override
+    public void delete(int id) {
+        pictureMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Picture> show() {
+        PictureExample example = new PictureExample();
+        example.setOrderByClause("id asc limit 6");
+        return pictureMapper.selectByExample(example);
+    }
 }

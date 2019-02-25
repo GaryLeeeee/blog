@@ -9,6 +9,10 @@
 <link href="css/m.css" rel="stylesheet">
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/comm.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://how2j.cn/study/axios.min.js"></script>
 <!--[if lt IE 9]>
 <script src="js/modernizr.js"></script>
 <![endif]-->
@@ -37,15 +41,10 @@
           <p><b>GaryLee</b>，一个默默地在学Java Web的大学生。</p>
         </ul>
       </div>
-      <div class="wdxc">
+      <div class="wdxc" id="demo">
         <h2>我的相册</h2>
         <ul>
-          <li><a href="/"><img src="images/7.jpg"></a></li>
-          <li><a href="/"><img src="images/8.jpg"></a></li>
-          <li><a href="/"><img src="images/9.jpg"></a></li>
-          <li><a href="/"><img src="images/10.jpg"></a></li>
-          <li><a href="/"><img src="images/11.jpg"></a></li>
-          <li><a href="/"><img src="images/12.jpg"></a></li>
+          <li v-for="picture in pictures"><a :href="'infopic?id='+picture.aid"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'"></a></li>
         </ul>
       </div>
       <div class="search">
@@ -153,4 +152,5 @@
 </article>
 <a href="#" class="cd-top">Top</a>
 </body>
+<script type="text/javascript" src="js/list.js"></script>
 </html>

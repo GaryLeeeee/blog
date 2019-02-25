@@ -82,4 +82,9 @@ public class AlbumController {
         PageInfo<Album> page = new PageInfo<>(albumService.list());
         return page;
     }
+    @RequestMapping("deleteAlbum")
+    public String deleteBlog(int id){
+        albumService.delete(id);
+        return "redirect:/share";
+    }
 }

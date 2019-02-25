@@ -26,4 +26,9 @@ public class PictureController {
     public List<Picture> listPicture(int aid){
         return pictureService.list(aid);
     }
+    @RequestMapping("showPictures")
+    @ResponseBody
+    public List<Picture> showPicture(){
+        return pictureService.show();
+    }
 }

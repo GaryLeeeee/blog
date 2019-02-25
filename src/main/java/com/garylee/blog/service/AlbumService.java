@@ -10,5 +10,6 @@ public interface AlbumService {
     void upload(MultipartFile multipartFile, int id);
     Album get(int id);
     List<Album> list();
+    void delete(int aid);
 
 }

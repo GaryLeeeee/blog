@@ -113,6 +113,8 @@
       <h2> {{album.title}} </h2>
       <div class="source">
         <div class="source_left"><span>{{album.createtime | dataFormat('yyyy-MM-dd')}}</span> </div>
+        <a :href="'/deleteAlbum?id='+album.id" style="text-decoration:underline" deleteLink='true'th:if="${(null!=session.user)&&('root'==session.user.name)}">删除</a>
+        <a :href="'/upload?aid='+album.id" style="text-decoration:underline" th:if="${(null!=session.user)&&('root'==session.user.name)}">添加图片</a>
         <div class="source_right"> <a href="javascript:;" class="list">列表查看</a> </div>
         <div class="source_right1"> <a href="javascript:;" class="gaoqing">高清查看</a> </div>
       </div>
@@ -143,7 +145,7 @@
           <li v-for="(picture,index) in pictures">
             <div class="picimg"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'" alt="" /></div>
             <div class="pictxt">
-              <h3>{{album.title}}<span>({{index}}/{{pictures.length}})</span></h3>
+              <h3>{{album.title}}<span>({{index+1}}/{{pictures.length}})</span></h3>
             </div>
           </li>
         </ul>
@@ -158,9 +160,11 @@
       <p class="diggit"><a href="javascript:" @click="like"> 很赞哦！ </a>(<b id="diggnum"><script type="text/javascript" src="/e/public/ViewClick/?classid=2&id=20&down=5"></script>13</b>)</p>
     </div>
  <div class="nextinfo">
-   <p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+(album.id-1)">{{albums[albums.length-1-album.id+2].title}}</a></p>
+   <!--<p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+(album.id-1)">{{albums[albums.length-1-album.id+2].title}}</a></p>-->
+   <!--ps.上面这一种实现的前提下是id要连续-->
+   <p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+albums[albums.length-1-album.id+2].id">{{albums[albums.length-1-album.id+2].title}}</a></p>
    <p v-else>上一篇：<a href="/share">返回列表</a></p>
-   <p  v-if="hasNext()">下一篇：<a :href="'infopic?id='+(album.id+1)">{{albums[albums.length-1-album.id].title}}</a></p>
+   <p  v-if="hasNext()">下一篇：<a :href="'infopic?id='+albums[albums.length-1-album.id].id">{{albums[albums.length-1-album.id].title}}</a></p>
    <p v-else>下一篇：<a href="/share">返回列表</a></p>
     </div>
     <div class="news_pl">
@@ -302,5 +306,19 @@
         if (r != null) return unescape(r[2]);
         return null;
     }
+    //判断是否为删除操作
+    $(function(){
+        $("a").click(function(){
+            var deleteLink = $(this).attr("deleteLink");
+            //            console.log(deleteLink);
+            if("true"==deleteLink){
+                var confirmDelete = confirm("确认要删除");
+                if(confirmDelete)
+                    return true;
+                return false;
+
+            }
+        });
+    })
 </script>
 </html>

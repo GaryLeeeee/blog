@@ -10,4 +10,6 @@ import java.util.List;
 public interface PictureService {
     void add(Picture picture);
     List<Picture> list(int aid);
+    void delete(int id);
+    List<Picture> show();
 }

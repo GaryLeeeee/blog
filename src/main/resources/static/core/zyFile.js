@@ -173,7 +173,9 @@ var ZYFILE = {
 		    }, false);  
 			
 			xhr.open("POST",self.url, true);
-			xhr.setRequestHeader("X_FILENAME", file.name);
+			// xhr.setRequestHeader("X_FILENAME", file.name);
+			// ps. 替换成下列代码可支持中文文件名
+			xhr.setRequestHeader("X_FILENAME", encodeURI(encodeURI(file.name)));
 			xhr.send(formdata);
 		},
 		// 返回需要上传的文件
