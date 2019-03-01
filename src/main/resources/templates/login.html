@@ -10,6 +10,8 @@
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/hc-sticky.js"></script>
     <script type="text/javascript" src="js/comm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
     <!--[if lt IE 9]>
     <script src="js/modernizr.js"></script>
     <![endif]-->
@@ -37,19 +39,14 @@
                 <i><img src="images/touxiang.jpg"></i>
                 <p><b>GaryLee</b>，一个默默地在学Java Web的大学生。</p>      </ul>
         </div>
-        <div class="wdxc">
+        <div class="wdxc" id="image">
             <h2>我的相册</h2>
             <ul>
-                <li><a href="/"><img src="images/7.jpg"></a></li>
-                <li><a href="/"><img src="images/8.jpg"></a></li>
-                <li><a href="/"><img src="images/9.jpg"></a></li>
-                <li><a href="/"><img src="images/10.jpg"></a></li>
-                <li><a href="/"><img src="images/11.jpg"></a></li>
-                <li><a href="/"><img src="images/12.jpg"></a></li>
+                <li v-for="picture in pictures"><a :href="'infopic?id='+picture.aid"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'"></a></li>
             </ul>
         </div>
         <div class="search">
-            <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+            <form action="#" method="post" name="searchform" id="searchform">
                 <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
                 <input name="show" value="title" type="hidden">
                 <input name="tempid" value="1" type="hidden">
@@ -142,6 +139,23 @@
             })
         });
 
+    })
+    new Vue({
+        el: "#image",
+        data: {
+            pictures: []
+        },
+        created: function () {
+            var self = this;
+            $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
+            //访问量
+            $.get(
+                "showPictures",
+                function (data) {
+                    self.pictures = data;
+                }
+            );
+        }
     })
 </script>
 </html>

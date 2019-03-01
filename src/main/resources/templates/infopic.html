@@ -50,16 +50,11 @@
     <div class="wdxc">
       <h2>我的相册</h2>
       <ul>
-        <li><a href="/"><img src="images/7.jpg"></a></li>
-        <li><a href="/"><img src="images/8.jpg"></a></li>
-        <li><a href="/"><img src="images/9.jpg"></a></li>
-        <li><a href="/"><img src="images/10.jpg"></a></li>
-        <li><a href="/"><img src="images/11.jpg"></a></li>
-        <li><a href="/"><img src="images/12.jpg"></a></li>
+        <li v-for="picture in images"><a :href="'infopic?id='+picture.aid"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'"></a></li>
       </ul>
     </div>
      <div class="search">
-      <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
+      <form action="#" method="post" name="searchform" id="searchform">
         <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
         <input name="show" value="title" type="hidden">
         <input name="tempid" value="1" type="hidden">
@@ -254,6 +249,7 @@
             album:[],
             albums:[],
             pictures:[],
+            images:[]//ps.暂时别名为images吧(原pictures)
 //            pageInfo:[],
 //            sortedBlogs:[]
         },
@@ -278,6 +274,12 @@
                 {aid:GetQueryString("id")},
                 function (data) {
                     self.pictures = data;
+                }
+            );
+            $.get(
+                "showPictures",
+                function (data) {
+                    self.images = data;
                 }
             );
 //            console.log("是否有上一页:"+(this.blogs[Number(GetQueryString("id"))-1-1] !== undefined))

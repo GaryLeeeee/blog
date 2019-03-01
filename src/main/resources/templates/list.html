@@ -61,16 +61,9 @@
     </div>
     <div class="tuijian">
       <h2>站长推荐</h2>
-      <ul>
-        <li><a href="/">你是什么人便会遇上什么人</a></li>
-        <li><a href="/">帝国cms 列表页调用子栏目，没有则不显示栏目名称</a></li>
-        <li><a href="/">第二届 优秀个人博客模板比赛参选活动</a></li>
-        <li><a href="/">个人博客模板《绅士》后台管理</a></li>
-        <li><a href="/">你是什么人便会遇上什么人</a></li>
-        <li><a href="/">帝国cms 列表页调用子栏目，没有则不显示栏目名称</a></li>
-        <li><a href="/">第二届 优秀个人博客模板比赛参选活动</a></li>
-        <li><a href="/">个人博客模板《绅士》后台管理</a></li>
-      </ul>
+        <ul v-for="(blog,index) in sortedBlogs" v-cloak>
+            <li><font color="red" size="1">({{blog.readnum}})</font><a :href="'info?id='+blog.id" :title="blog.title">{{index+1}}.{{blog.title}}</a></li>
+        </ul>
     </div>
      <div class="tuijian">
       <h2>点击排行</h2>
@@ -112,66 +105,5 @@
 </article>
 <a href="#" class="cd-top">Top</a>
 </body>
-<script>
-    new Vue({
-        el:"#demo",
-        data:{
-            pageInfo:[],
-            blogs:[],
-            sortedBlogs:[]
-        },
-        created:function () {
-            var self = this;
-            $.ajaxSettings.async = false;//设置后则为同步执行(即执行完ajax才执行后续代码)
-            $.get(
-                "getBlogPageInfo",
-                {start: GetQueryString("start"?"start":0)},
-                function (data) {
-                    self.pageInfo = data;
-                    self.blogs = data["list"];
-                }
-            )
-            $.get(
-                "sortBlogs",
-                function (data) {
-                    self.sortedBlogs = data;
-                }
-            )
-//            $('#content').html(this.Blog.content);//使用这个可以将文本以html输出
-        },
-        methods:{
-            goTo:function (event) {//页数跳转
-//                获取当前标签的文本值
-                var text = event.target.innerHTML;
-                console.log("点击事件(页数为):"+text);
-                window.location.href="list?start="+text;
-            },
-            search:function () {
-                var self = this;
-//                console.log("搜索");
-//                console.log($('#keyboard').val());
-                /*
-                缺：查询到的结果分页，关键词高亮
-                 */
-                $.get(
-                    "searchBlog",
-                    {keyword:$('#keyboard').val(),start: GetQueryString("start"?"start":0)},
-                    function (data) {
-//                        self.blogs = data;
-                        self.pageInfo = data;
-                        self.blogs = data["list"];
-//                      在搜索列表第一个上面加上提示信息(搜索结果),不直接在父级容器加(对不齐)
-                        $(".pp:first").before("<font>搜索结果("+$('#keyboard').val()+"):</font>")
-                    }
-                )
-            }
-        }
-    });
-    function GetQueryString(name) {//获取url中key为name的value
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-</script>
+<script type="text/javascript" src="js/list.js"></script>
 </html>
