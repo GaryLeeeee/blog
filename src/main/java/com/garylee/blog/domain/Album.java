@@ -54,4 +54,15 @@ public class Album {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", createtime=" + createtime +
+                ", firstPictureId=" + firstPictureId +
+                '}';
+    }
 }

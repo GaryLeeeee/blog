@@ -1,6 +1,7 @@
 package com.garylee.blog.controller;
 
 import com.garylee.blog.dao.BlogDao;
+import com.garylee.blog.domain.Album;
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.service.BlogService;
 import com.github.pagehelper.PageHelper;
@@ -79,6 +80,20 @@ public class BlogController {
     public String deleteBlog(int id){
         blogService.delete(id);
         return "redirect:/list";
+    }
+
+    @RequestMapping("getPreviousBlog")
+    @ResponseBody
+    public Blog getPreviousAlbum(int id){
+        Blog blog = blogDao.getPerviousBlog(id);
+        return blog;
+    }
+
+    @RequestMapping("getNextBlog")
+    @ResponseBody
+    public Blog getNextAlbum(int id){
+        Blog blog = blogDao.getNextBlog(id);
+        return blog;
     }
 
     public static void main(String[] args) {

@@ -33,12 +33,12 @@ new Vue({
         )
     },
     methods: {
-        goTo: function (event) {//页数跳转
+            goTo: function (event) {//页数跳转
 //                获取当前标签的文本值
-            var text = event.target.innerHTML;
-            console.log("点击事件(页数为):" + text);
-            window.location.href = "list?start=" + text;
-        },
+                var text = event.target.innerHTML;
+                console.log("点击事件(页数为):" + text);
+                window.location.href = "list?start=" + text;
+            },
         search: function () {
             var self = this;
 //                console.log("搜索");

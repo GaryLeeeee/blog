@@ -1,5 +1,6 @@
 package com.garylee.blog.controller;
 
+import com.garylee.blog.dao.AlbumDao;
 import com.garylee.blog.domain.Album;
 import com.garylee.blog.domain.Blog;
 import com.garylee.blog.domain.Picture;
@@ -39,6 +40,8 @@ public class AlbumController {
     AlbumService albumService;
     @Autowired
     PictureService pictureService;
+    @Autowired
+    AlbumDao albumDao;
     @RequestMapping("addAlbum")
     public String addAlbum(Album album){
         album.setCreatetime(new Date());
@@ -86,5 +89,19 @@ public class AlbumController {
     public String deleteBlog(int id){
         albumService.delete(id);
         return "redirect:/share";
+    }
+    @RequestMapping("getPreviousAlbum")
+    @ResponseBody
+    public Album getPreviousAlbum(int id){
+        Album album = albumDao.getPerviousAlbum(id);
+        System.out.println("getPreviousAlbum album:"+album);
+        return album;
+    }
+
+    @RequestMapping("getNextAlbum")
+    @ResponseBody
+    public Album getNextAlbum(int id){
+        Album album = albumDao.getNextAlbum(id);
+        return album;
     }
 }

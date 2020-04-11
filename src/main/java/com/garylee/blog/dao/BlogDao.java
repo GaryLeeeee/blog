@@ -21,4 +21,10 @@ public interface BlogDao {
     //返回所有blog(用mapper的不能显示content)
     @Select("select * from blog.blog order by id desc")
     public List<Blog> listBlogs();
+
+    @Select(" select * from blog.blog where id < #{id} order by id desc  limit 1")
+    public Blog getPerviousBlog(int id);
+
+    @Select(" select * from blog.blog where id > #{id} limit 1")
+    public Blog getNextBlog(int id);
 }

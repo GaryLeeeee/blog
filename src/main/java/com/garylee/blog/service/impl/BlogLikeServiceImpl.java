@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by GaryLee on 2018-10-02 14:18.
@@ -23,6 +27,24 @@ public class BlogLikeServiceImpl implements BlogLikeService{
 
     @Autowired
     BlogLikeDao blogLikeDao;
+
+    public static void main(String[] args) {
+        List<Map<String,Object>> dynamicList = new ArrayList<>();
+        Map<String,Object> map1 = new HashMap<>();
+        map1.put("dynamic",2);
+        map1.put("user",4);
+        Map<String,Object> map2 = new HashMap<>();
+        map2.put("dynamic",3);
+        map2.put("user",1);
+        dynamicList.add(map1);
+        dynamicList.add(map2);
+
+        List<Map<String, Object>> officialList = dynamicList.stream().filter(i -> {
+            return i.get("dynamic") .equals( 2);
+        }).collect(Collectors.toList());
+
+        System.out.println(officialList);
+    }
     @Override
     public boolean add(BlogLike blogLike) {
         try {

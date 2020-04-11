@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisTestTest {
-    @Autowired
-    RedisTest redisTest;
-    @Test
-    public void redis() throws Exception {
-        redisTest.redis();
-    }
+//    @Autowired
+//    RedisTest redisTest;
+//    @Test
+//    public void redis() throws Exception {
+//        redisTest.redis();
+//    }
 
 }

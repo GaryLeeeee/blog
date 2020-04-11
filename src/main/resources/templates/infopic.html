@@ -30,7 +30,7 @@
     <ul id="starlist">
       <li><a href="/index">网站首页</a></li>
       <li><a href="/share">我的相册</a></li>
-      <li><a href="/list">我的日记</a></li>
+      <li><a href="/list">我的日志</a></li>
       <li><a href="/about">关于我</a></li>
       <li><a href="/gbook">留言</a></li>
       <li th:if="${null==session.user}"><a href="/login">登陆</a></li>
@@ -53,24 +53,24 @@
         <li v-for="picture in images"><a :href="'infopic?id='+picture.aid"><img :src="'https://lee-blog-picture.oss-cn-shenzhen.aliyuncs.com/'+picture.id+'.jpg'"></a></li>
       </ul>
     </div>
-     <div class="search">
-      <form action="#" method="post" name="searchform" id="searchform">
-        <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">
-        <input name="show" value="title" type="hidden">
-        <input name="tempid" value="1" type="hidden">
-        <input name="tbname" value="news" type="hidden">
-        <input name="Submit" class="input_submit" value="搜索" type="submit">
-      </form>
-    </div>
-    <div class="fenlei">
-      <h2>文章分类</h2>
-      <ul>
-        <li><a href="/">学无止境（33）</a></li>
-        <li><a href="/">日记（19）</a></li>
-        <li><a href="/">慢生活（520）</a></li>
-        <li><a href="/">美文欣赏（40）</a></li>
-      </ul>
-    </div>
+     <!--<div class="search">-->
+      <!--<form action="#" method="post" name="searchform" id="searchform">-->
+        <!--<input name="keyboard" id="keyboard" class="input_text" value="请输入关键字词" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字词'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字词'}" type="text">-->
+        <!--<input name="show" value="title" type="hidden">-->
+        <!--<input name="tempid" value="1" type="hidden">-->
+        <!--<input name="tbname" value="news" type="hidden">-->
+        <!--<input name="Submit" class="input_submit" value="搜索" type="submit">-->
+      <!--</form>-->
+    <!--</div>-->
+    <!--<div class="fenlei">-->
+      <!--<h2>文章分类</h2>-->
+      <!--<ul>-->
+        <!--<li><a href="/">学无止境（33）</a></li>-->
+        <!--<li><a href="/">日志（19）</a></li>-->
+        <!--<li><a href="/">慢生活（520）</a></li>-->
+        <!--<li><a href="/">美文欣赏（40）</a></li>-->
+      <!--</ul>-->
+    <!--</div>-->
 
     <div class="guanzhu">
       <h2>关注我 么么哒</h2>
@@ -157,28 +157,36 @@
  <div class="nextinfo">
    <!--<p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+(album.id-1)">{{albums[albums.length-1-album.id+2].title}}</a></p>-->
    <!--ps.上面这一种实现的前提下是id要连续-->
-   <p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+albums[albums.length-1-album.id+2].id">{{albums[albums.length-1-album.id+2].title}}</a></p>
+   <p v-if="previousAlbum.length!=0">上一篇：<a :href="'infopic?id='+previousAlbum.id">{{previousAlbum.title}}</a></p>
+   <!--<p v-if="hasPrevious()">上一篇：<a :href="'infopic?id='+albums[albums.length-1-album.id+2].id">{{albums[albums.length-1-album.id+2].title}}</a></p>-->
    <p v-else>上一篇：<a href="/share">返回列表</a></p>
-   <p  v-if="hasNext()">下一篇：<a :href="'infopic?id='+albums[albums.length-1-album.id].id">{{albums[albums.length-1-album.id].title}}</a></p>
+   <!--<p  v-if="nextAlbum.length!=0">下一篇：<a :href="'infopic?id='+nextAlbum.id">{{albums[albums.length-1-album.id].title}}</a></p>-->
+   <p  v-if="nextAlbum.length!=0">下一篇：<a :href="'infopic?id='+nextAlbum.id">{{nextAlbum.title}}</a></p>
    <p v-else>下一篇：<a href="/share">返回列表</a></p>
     </div>
     <div class="news_pl">
         <h2>文章评论</h2>
         <div class="gbko"> 
           <script src="/e/pl/more/?classid=77&amp;id=106&amp;num=20"></script>
-          <div class="fb">
+          <!--<div class="fb">-->
+            <!--<ul>-->
+              <!--<p class="fbtime"><span>2018-07-24 11:52:38</span>dancesmile</p>-->
+              <!--<p class="fbinfo">这才是我要的朋友圈</p>-->
+            <!--</ul>-->
+          <!--</div>-->
+          <!--<div class="fb">-->
+            <!--<ul>-->
+              <!--<p class="fbtime"><span>2018-07-24 08:52:48</span> 卜野</p>-->
+              <!--<p class="fbinfo"></p>-->
+              <!--<div class="ecomment"><span class="ecommentauthor">网友 家蚂蚁 的原文：</span>-->
+                <!--<p class="ecommenttext">坚持哟!看你每天都有写，请继续加油，再接再厉哦</p>-->
+              <!--</div>-->
+            <!--</ul>-->
+          <!--</div>-->
+          <div class="fb" v-for="(message,index) in messages">
             <ul>
-              <p class="fbtime"><span>2018-07-24 11:52:38</span>dancesmile</p>
-              <p class="fbinfo">这才是我要的朋友圈</p>
-            </ul>
-          </div>
-          <div class="fb">
-            <ul>
-              <p class="fbtime"><span>2018-07-24 08:52:48</span> 卜野</p>
-              <p class="fbinfo"></p>
-              <div class="ecomment"><span class="ecommentauthor">网友 家蚂蚁 的原文：</span>
-                <p class="ecommenttext">坚持哟!看你每天都有写，请继续加油，再接再厉哦</p>
-              </div>
+              <p class="fbtime"><span>{{message.createTime}}</span> {{message.nickname}}</p>
+              <p class="fbinfo">{{message.message}}</p>
             </ul>
           </div>
           
@@ -194,18 +202,23 @@
 		  return true;
 		  }
 		  </script>
-          <form action="/e/pl/doaction.php" method="post" name="saypl" id="saypl" onsubmit="return CheckPl(document.saypl)">
+          <form  method="post" name="saypl" id="saypl">
             <div id="plpost">
-              <p class="saying"><span><a href="/e/pl/?classid=77&amp;id=106">共有<script type="text/javascript" src="/e/public/ViewClick/?classid=77&amp;id=106&amp;down=2"></script>2条评论</a></span>来说两句吧...</p>
-              <p class="yname"><span>用户名:</span>
-                <input name="username" type="text" class="inputText" id="username" value="" size="16">
-              </p>
-              <p class="yzm"><span>验证码:</span>
-                <input name="key" type="text" class="inputText" size="16">
-              </p>
+              <p class="saying"><span>共有{{messages.length}}条评论</span>来说两句吧...</p>
+              <!--<p class="yname"><span>用户名:</span>-->
+                <!--<input name="username" type="text" class="inputText" id="username" value="" size="16">-->
+              <!--</p>-->
+              <!--<p class="yzm"><span>验证码:</span>-->
+                <!--<input name="key" type="text" class="inputText" size="16">-->
+              <!--</p>-->
+
+              <input type="hidden" th:value="${session.user}" name="user" id="user"/>
+              <input type="hidden" th:if="${null!=session.user}" th:value="${session.user.id}" name = "uid" id="uid"/>
+              <input type="hidden" th:if="${null!=session.user}" th:value="${session.user.name}" name = "nickname" id="nickname"/>
+
               <input name="nomember" type="hidden" id="nomember" value="1" checked="checked">
               <textarea name="saytext" rows="6" id="saytext"></textarea>
-              <input name="imageField" type="submit" value="提交">
+              <input name="imageField" type="submit"  id="leaveMessage" value="提交">
               <input name="id" type="hidden" id="id" value="106">
               <input name="classid" type="hidden" id="classid" value="77">
               <input name="enews" type="hidden" id="enews" value="AddPl">
@@ -249,8 +262,11 @@
             album:[],
             albums:[],
             pictures:[],
-            images:[]//ps.暂时别名为images吧(原pictures)
-//            pageInfo:[],
+            images:[],//ps.暂时别名为images吧(原pictures)
+            pageInfo:[],
+            messages:[],
+            previousAlbum:[],
+            nextAlbum:[]
 //            sortedBlogs:[]
         },
         created:function () {
@@ -282,6 +298,28 @@
                     self.images = data;
                 }
             );
+            $.get(
+                "getMessagePageInfo",
+                {start: (GetQueryString("start")?GetQueryString("start"):0),type:2,targetId:GetQueryString("id")},
+                function (data) {
+//                    self.pageInfo = data;
+                    self.messages = data["list"];
+                }
+            );
+            $.get(
+                "getPreviousAlbum",
+                {id:GetQueryString("id")},
+                function (data) {
+                    self.previousAlbum = data;
+                }
+            );
+            $.get(
+                "getNextAlbum",
+                {id:GetQueryString("id")},
+                function (data) {
+                    self.nextAlbum = data;
+                }
+            )
 //            console.log("是否有上一页:"+(this.blogs[Number(GetQueryString("id"))-1-1] !== undefined))
 //            console.log("是否有下一页:"+(this.blogs[Number(GetQueryString("id"))] !== undefined))
         },
@@ -321,6 +359,32 @@
 
             }
         });
+    })
+    $(function () {
+        $('#leaveMessage').click(function () {
+            var user = $('#user').val();
+            console.log("user:" + user)
+            if (!user) {
+                alert("请先登陆");
+                //todo 跳转登陆界面
+//                location.href="/login";
+                return;
+            }
+
+            var uid = $('#uid').val();
+            var nickname = $('#nickname').val();
+
+            var message = $('#saytext').val();
+            alert("留言成功"+nickname+","+message);
+//            相册留言 enum为2
+            var type = 2;
+            var targetId =GetQueryString("id");
+            $.post("/leaveMessage", {"uid": uid, "nickname": nickname,"type":type,"targetId":targetId,"message":message}, function (result) {
+            })
+
+
+        });
+
     })
 </script>
 </html>
